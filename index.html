@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f8f4">
+    <meta name="description" content="A private, personal health record organizer with OCR and plain-language summaries.">
+    <title>MY-SMR — Personal Health Copilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="MY-SMR home">
+          <span class="brand-mark" aria-hidden="true">+</span>
+          <span><strong>MY-SMR</strong><small>PERSONAL HEALTH COPILOT</small></span>
+        </a>
+        
+        <nav class="nav-links">
+          <a class="nav-link active" href="#overview"><span aria-hidden="true">⌂</span> <span id="nav-overview">Overview</span></a>
+          <a class="nav-link" href="#symptoms"><span aria-hidden="true">♡</span> <span id="nav-symptoms">Symptom guide</span></a>
+          <a class="nav-link" href="#records"><span aria-hidden="true">▤</span> <span id="nav-records">My records</span></a>
+          <a class="nav-link" href="#timeline"><span aria-hidden="true">◷</span> <span id="nav-timeline">Health timeline</span></a>
+          <a class="nav-link" href="#profile"><span aria-hidden="true">◎</span> <span id="nav-profile">Health profile</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="privacy-card">
+            <span class="privacy-icon" aria-hidden="true">♧</span>
+            <strong id="privacy-title">Your health, your control</strong>
+            <p id="privacy-copy">Your records stay in this browser. Nothing is sent to a server.</p>
+          </div>
+          <div class="user-mini"><span class="avatar">A</span><span><strong id="user-name-side">Aarav Mehta</strong><small>Personal account</small></span><span class="more">···</span></div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>MY-SMR</span><span>/</span><strong id="breadcrumb-overview">Overview</strong></div>
+          <div class="top-actions">
+            <span class="local-badge"><i></i> <span id="local-badge-label">Local database</span></span>
+            <a class="auth-nav-link" id="auth-nav-link" href="login.html">Sign out</a>
+            <label class="visually-hidden" for="language-toggle">Language</label>
+            <select id="language-toggle" class="language-toggle" aria-label="Language">
+              <option value="en">English</option>
+              <option value="te">తెలుగు</option>
+              <option value="ta">தமிழ்</option>
+              <option value="hi">हिन्दी</option>
+            </select>
+            <button class="icon-button" type="button" aria-label="Help" title="Help">?</button>
+          </div>
+        </header>
+
+        <section class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="sparkle">✳</span> <span id="welcome-eyebrow">YOUR HEALTH, IN ONE PLACE</span></div>
+            <h1 id="greeting">Hello,Aarav <span class="wave">✦</span></h1>
+            <p class="intro" id="welcome-intro">A clearer picture of your health starts here.</p>
+          </div>
+        </section>
+
+        <section class="panel dashboard-tools" aria-label="Search health records">
+          <form id="record-search-form" class="record-search">
+            <label class="visually-hidden" for="record-search-input">Search your health records</label>
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="record-search-input" type="search" autocomplete="off" placeholder="Search your records, medicines, or test results">
+            <button class="button button-secondary" type="submit">Search</button>
+          </form>
+          <p id="record-search-status" class="search-status" role="status" aria-live="polite"></p>
+          <div class="tool-shortcuts">
+            <span id="tool-shortcuts-label">Need help with symptoms?</span>
+            <a class="text-link" id="symptom-quick-link" href="#symptoms">Open symptom guide →</a>
+          </div>
+        </section>
+
+        <section class="panel scanner-panel" aria-labelledby="scanner-heading">
+          <div class="scanner-copy">
+            <span class="scanner-icon" aria-hidden="true">▤</span>
+            <div>
+              <div class="eyebrow" id="scanner-eyebrow">PRESCRIPTION SCANNER</div>
+              <h2 id="scanner-heading">Scan or upload a prescription</h2>
+              <p id="scanner-description">Take a photo with your camera or choose an image from your gallery. Review OCR text before saving.</p>
+            </div>
+          </div>
+          <button class="button button-primary" id="upload-trigger" type="button"><span class="button-plus">+</span> <span id="upload-trigger-label">Open scanner</span></button>
+        </section>
+
+        <section class="panel symptom-panel" id="symptoms" aria-labelledby="symptom-heading">
+          <div class="panel-heading">
+            <div>
+              <div class="eyebrow" id="symptom-eyebrow">GENERAL HEALTH INFORMATION</div>
+              <h2 id="symptom-heading">Describe your symptoms</h2>
+            </div>
+            <span class="ai-tag">Not a diagnosis</span>
+          </div>
+          <p class="symptom-intro" id="symptom-intro">Share what you are experiencing by typing or using voice input. We’ll check for warning signs and suggest a safe next step—not identify a disease or recommend medicines.</p>
+          <p class="symptom-coverage" id="symptom-coverage">Recognizes common concerns involving breathing, heart, digestion, eyes, ears, skin, urinary and reproductive health, pain, sleep, and mood. This list is not exhaustive.</p>
+          <form id="symptom-form" novalidate>
+            <div class="form-row symptom-fields">
+              <label class="field-label" for="symptom-age"><span id="symptom-age-label">Patient age (years), required</span>
+                <input id="symptom-age" type="number" inputmode="decimal" min="0" max="120" step="0.01" required placeholder="Enter age in years (e.g. 0.25 = 3 months)">
+              </label>
+              <label class="field-label symptom-text-label" for="symptom-text"><span id="symptom-text-label">Symptoms and when they started</span>
+                <textarea id="symptom-text" rows="3" maxlength="1200" required placeholder="For example: headache since yesterday, with a mild fever"></textarea>
+              </label>
+            </div>
+            <div class="symptom-actions">
+              <button class="button button-secondary" id="voice-input" type="button"><span id="voice-input-label">🎙 Speak symptoms</span></button>
+              <span id="voice-status" class="voice-status" role="status" aria-live="polite"></span>
+              <button class="button button-primary" id="check-symptoms" type="submit"><span id="check-symptoms-label">Check next steps</span></button>
+            </div>
+          </form>
+          <div id="symptom-result" class="symptom-result" role="status" aria-live="polite" hidden></div>
+          <p class="symptom-disclaimer" id="symptom-disclaimer">Not for emergencies. This tool cannot diagnose, predict recovery time, or recommend tablets. Do not delay urgent care based on this page. Voice recognition availability and privacy depend on your browser.</p>
+        </section>
+
+        <section class="stats-grid" aria-label="Health record overview">
+          <article class="stat-card"><div class="stat-top"><span id="stat-label-records">Total records</span><span class="stat-icon lilac">▤</span></div><strong id="stat-records">0</strong><small id="stat-copy-records">Documents in your library</small></article>
+          <article class="stat-card"><div class="stat-top"><span id="stat-label-labs">Lab reports</span><span class="stat-icon mint">⌁</span></div><strong id="stat-labs">0</strong><small id="stat-copy-labs">Reports with test results</small></article>
+          <article class="stat-card"><div class="stat-top"><span id="stat-label-medicines">Medicines noted</span><span class="stat-icon peach">✚</span></div><strong id="stat-medicines">0</strong><small id="stat-copy-medicines">From your records</small></article>
+          <article class="stat-card next-check"><div class="stat-top"><span id="stat-label-abha">ABHA link</span><span class="stat-icon blue">◎</span></div><strong id="abha-status">Not linked</strong><small id="stat-copy-abha">Mock profile · not connected to ABDM</small><button id="profile-shortcut" class="text-link" type="button"><span id="profile-shortcut-label">Set up profile</span> <span>→</span></button></article>
+        </section>
+
+        <section class="content-grid">
+          <div class="primary-column">
+            <article class="panel summary-panel">
+              <div class="panel-heading">
+                <div><div class="eyebrow" id="summary-eyebrow">PERSONALIZED OVERVIEW</div><h2 id="summary-heading">Your health, at a glance</h2></div>
+                <span class="ai-tag"><span>✳</span> <span id="summary-tag">SIMPLE SUMMARY</span></span>
+              </div>
+              <div id="summary-content" class="summary-content"></div>
+              <div class="summary-footer"><span class="info-dot">i</span><span id="summary-disclaimer">This is an organizational summary, not a diagnosis. Always review results with a healthcare professional.</span><button class="icon-button small" id="refresh-summary" type="button" aria-label="Refresh summary" title="Refresh summary">↻</button></div>
+            </article>
+
+            <article class="panel records-panel" id="records">
+              <div class="panel-heading records-heading">
+                <div><div class="eyebrow" id="records-eyebrow">YOUR LIBRARY</div><h2 id="records-heading">Recent health records</h2></div>
+                <a class="text-link" href="#timeline"><span id="view-timeline-label">View timeline</span> <span>→</span></a>
+              </div>
+              <div id="records-list" class="records-list"></div>
+            </article>
+
+            <article class="panel timeline-panel" id="timeline">
+              <div class="panel-heading"><div><div class="eyebrow" id="timeline-eyebrow">YOUR HEALTH HISTORY</div><h2 id="timeline-heading">Health timeline</h2></div></div>
+              <div id="timeline-list" class="timeline-list"></div>
+            </article>
+          </div>
+
+          <aside class="secondary-column">
+            <article class="panel profile-panel" id="profile">
+              <div class="panel-heading">
+                <div><div class="eyebrow" id="profile-eyebrow">YOUR DETAILS</div><h2 id="profile-heading">Health profile</h2></div>
+                <button id="edit-profile" class="icon-button small" type="button" aria-label="Edit profile" title="Edit profile">✎</button>
+              </div>
+              <div class="profile-person"><span class="profile-avatar">A</span><span><strong id="profile-name">Aarav Mehta</strong><small id="profile-demographics">Add your details</small></span></div>
+              <div class="profile-divider"></div>
+              <div class="profile-item"><span id="blood-label">Blood group</span><strong id="profile-blood">Not added</strong></div>
+              <div class="profile-item"><span id="allergies-label">Allergies</span><strong id="profile-allergies">Not added</strong></div>
+              <div class="profile-item"><span><span id="abha-label">ABHA ID</span> <span class="mock-tag">MOCK</span></span><strong id="profile-abha">Not linked</strong></div>
+              <button class="button button-secondary full-button" id="edit-profile-secondary" type="button">Edit health profile</button>
+            </article>
+
+            <article class="panel insight-panel">
+              <div class="insight-icon">✳</div><div class="eyebrow" id="insight-eyebrow">A HELPFUL REMINDER</div>
+              <h3 id="insight-heading">Keep your records together</h3>
+              <p id="insight-copy">Add prescriptions and test reports to build a timeline you can review before your next appointment.</p>
+              <button class="text-link" id="insight-upload" type="button"><span id="insight-upload-label">Add a record</span> <span>→</span></button>
+            </article>
+
+            <article class="panel diet-panel">
+              <div class="eyebrow" id="diet-eyebrow">GENERAL WELLNESS</div>
+              <h3 id="diet-heading">Everyday food and diet</h3>
+              <p id="diet-intro">General healthy-eating ideas—not a personal diet prescription.</p>
+              <ul class="diet-list">
+                <li id="diet-point-one">Build meals around vegetables, fruit, whole grains, and a protein source.</li>
+                <li id="diet-point-two">Choose water regularly and limit highly processed foods and excess salt.</li>
+                <li id="diet-point-three">Ask a clinician for advice tailored to allergies, pregnancy, or health conditions.</li>
+              </ul>
+              <p class="diet-note" id="diet-note">Do not change a prescribed diet based on this guide.</p>
+            </article>
+
+            <article class="panel prescribed-medicines-panel">
+              <div class="eyebrow" id="prescribed-medicines-eyebrow">FROM YOUR PRESCRIPTION</div>
+              <h3 id="prescribed-medicines-heading">Prescription guide</h3>
+              <div id="prescribed-medicines-list" class="prescribed-medicines-list"></div>
+              <p class="prescribed-medicines-note" id="prescribed-medicines-note">This guide repeats details found in your prescription and adds general food information. It does not explain what a medicine treats or replace advice from your prescriber or pharmacist.</p>
+            </article>
+
+            <article class="panel recommendation-panel">
+              <div class="panel-heading recommendation-header">
+                <div>
+                  <div class="eyebrow" id="recommendation-eyebrow">SMART CARE TIPS</div>
+                  <h3 id="recommendation-heading">Recommended actions</h3>
+                </div>
+                <button class="icon-button small" id="refresh-recommendations" type="button" aria-label="Refresh recommendations" title="Refresh recommendations">↻</button>
+              </div>
+              <div id="recommendation-list" class="recommendation-list"></div>
+              <p class="recommendation-note" id="recommendation-note">Suggestions update from your latest prescription and lab records. Edit them to match your care plan.</p>
+            </article>
+
+            <article class="panel data-panel">
+              <div class="eyebrow" id="data-eyebrow">YOUR DATA</div>
+              <h3 id="data-heading">Portable by design</h3>
+              <p id="data-copy">Records are structured using FHIR-inspired resource fields. Export a JSON copy anytime.</p>
+              <button class="button button-secondary full-button" id="export-data" type="button"><span id="export-data-label">↓ &nbsp; Export health data</span></button>
+            </article>
+          </aside>
+        </section>
+
+        <footer class="page-footer"><span id="footer-about">MY-SMR · A personal health record organizer</span><span id="footer-warning">Not for emergency use or medical diagnosis</span></footer>
+      </main>
+    </div>
+
+    <input id="file-input" type="file" accept="image/*,.txt" multiple hidden>
+    <input id="camera-input" type="file" accept="image/*" capture="environment" hidden>
+
+    <dialog id="upload-dialog" class="modal">
+      <form method="dialog" class="modal-card upload-modal" id="upload-form">
+        <button class="modal-close" value="cancel" aria-label="Close">×</button>
+        <div class="eyebrow" id="upload-eyebrow">ADD TO YOUR LIBRARY</div>
+        <h2 id="upload-heading">Upload a health record</h2>
+        <p class="modal-description" id="upload-description">Choose a prescription, lab report, discharge summary, or diagnostic record. Images are read with OCR in your browser.</p>
+        <label class="drop-zone" id="drop-zone" for="file-input">
+          <span class="upload-icon">↑</span><strong id="drop-title">Drop a file here, or <u>browse</u></strong>
+          <small id="drop-description">Images (JPG, PNG) or text files · processed on this device</small>
+        </label>
+        <div class="form-row">
+          <label class="field-label" for="record-type"><span id="record-type-label">Record type</span>
+            <select id="record-type"><option value="auto">Detect automatically</option><option value="prescription">Prescription</option><option value="lab">Lab report</option><option value="discharge">Discharge summary</option><option value="diagnostic">Diagnostic record</option><option value="other">Other</option></select>
+          </label>
+          <label class="field-label" for="record-language"><span id="record-language-label">Summary language</span>
+              <select id="record-language"><option value="en">English</option><option value="te">తెలుగు</option><option value="ta">தமிழ்</option><option value="hi">हिन्दी</option></select>
+          </label>
+        </div>
+        <label class="field-label" for="upload-patient-age"><span id="upload-age-label">Patient age (years), required</span>
+          <input id="upload-patient-age" type="number" inputmode="decimal" min="0" max="120" step="0.01" required placeholder="Enter age in years (e.g. 0.25 = 3 months)">
+        </label>
+        <div id="upload-status" class="upload-status" role="status" aria-live="polite"></div>
+        <div class="modal-actions"><button type="button" class="button button-secondary" id="cancel-upload">Cancel</button><button type="button" class="button button-secondary" id="take-photo">Take photo</button><button type="button" class="button button-primary" id="choose-file">Choose from gallery</button></div>
+        <p class="fine-print" id="upload-fine-print">Images use OCR and need an internet connection. Extracted text is processed by the local backend. Text files work offline. PDFs are not supported. Check extracted details before saving.</p>
+      </form>
+    </dialog>
+
+    <dialog id="record-dialog" class="modal">
+      <form method="dialog" class="modal-card record-modal" id="record-form">
+        <button class="modal-close" value="cancel" aria-label="Close">×</button>
+        <div class="eyebrow" id="review-eyebrow">REVIEW EXTRACTED DETAILS</div>
+        <h2 id="review-title">Review your record</h2>
+        <p class="modal-description" id="review-description">Please verify these details against your original document. Fields are editable.</p>
+        <input type="hidden" id="record-id">
+        <input type="hidden" id="record-file-name">
+        <input type="hidden" id="record-mime-type">
+        <input type="hidden" id="record-patient-age">
+        <input type="hidden" id="record-image-id">
+        <figure id="record-review-image" class="record-source-image" hidden>
+          <figcaption>Uploaded document preview</figcaption>
+          <img id="record-review-image-preview" alt="Preview of the uploaded health document">
+        </figure>
+        <p id="review-patient-age" class="patient-age-note"></p>
+        <div class="form-row">
+          <label class="field-label" for="review-name"><span id="review-name-label">Record title</span><input id="review-name" required maxlength="120"></label>
+          <label class="field-label" for="review-type"><span id="review-type-label">Record type</span><select id="review-type"><option value="prescription">Prescription</option><option value="lab">Lab report</option><option value="discharge">Discharge summary</option><option value="diagnostic">Diagnostic record</option><option value="other">Other</option></select></label>
+        </div>
+        <div class="form-row">
+          <label class="field-label" for="review-date"><span id="review-date-label">Document date</span><input id="review-date" type="date"></label>
+          <label class="field-label" for="review-provider"><span id="review-provider-label">Clinic / provider</span><input id="review-provider" maxlength="120" placeholder="If known"></label>
+        </div>
+        <label class="field-label" for="review-diagnosis"><span id="review-diagnosis-label">Diagnosis / notes</span><textarea id="review-diagnosis" rows="2" maxlength="600" placeholder="Extracted text or notes"></textarea></label>
+        <label class="field-label" for="review-medicines"><span id="review-medicines-label">Medicines</span><textarea id="review-medicines" rows="2" maxlength="600" placeholder="Medicine and dosage, if present"></textarea></label>
+        <label class="field-label" for="review-tests"><span id="review-tests-label">Test results</span><textarea id="review-tests" rows="3" maxlength="12000" placeholder="Test name, value, units, and reference range"></textarea></label>
+        <section class="scan-findings" aria-labelledby="review-findings-heading">
+          <strong id="review-findings-heading">What the scan found</strong>
+          <p id="review-medicine-note">Medicine names and instructions below are copied from the document. Confirm them with the original prescription or a pharmacist; this app cannot explain what a medicine treats or recommend how to take it.</p>
+          <p id="review-report-note">Report lines are shown as extracted. They are not a diagnosis or clinical interpretation.</p>
+          <div id="review-findings-content"></div>
+        </section>
+        <details class="ocr-details"><summary>View OCR text</summary><textarea id="review-raw" rows="5" readonly></textarea></details>
+        <div class="modal-actions"><button type="button" class="button button-secondary" id="cancel-review">Cancel</button><button type="submit" class="button button-primary" id="save-record">Save record</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="record-details-dialog" class="modal">
+      <section class="modal-card record-details-modal" aria-labelledby="record-details-title">
+        <button class="modal-close" id="close-record-details" type="button" aria-label="Close">×</button>
+        <div class="eyebrow" id="record-details-eyebrow">SCAN RESULTS</div>
+        <h2 id="record-details-title">Report details</h2>
+        <div id="record-details-content" class="record-details-content"></div>
+        <div class="modal-actions"><button type="button" class="button button-secondary" id="close-record-details-button">Close</button></div>
+      </section>
+    </dialog>
+
+    <dialog id="profile-dialog" class="modal">
+      <form method="dialog" class="modal-card profile-modal" id="profile-form">
+        <button class="modal-close" value="cancel" aria-label="Close">×</button>
+        <div class="eyebrow" id="profile-dialog-eyebrow">YOUR DETAILS</div><h2 id="profile-dialog-heading">Health profile</h2>
+        <p class="modal-description" id="profile-dialog-description">These details stay on this device. ABHA below is only a mock link; this app does not connect to ABDM.</p>
+        <label class="field-label" for="input-name"><span id="name-field-label">Full name</span><input id="input-name" maxlength="100" placeholder="Your name"></label>
+        <div class="form-row">
+          <label class="field-label" for="input-dob"><span id="dob-field-label">Date of birth</span><input id="input-dob" type="date"></label>
+          <label class="field-label" for="input-blood"><span id="blood-field-label">Blood group</span><select id="input-blood"><option value="">Not added</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option><option>Unknown</option></select></label>
+        </div>
+        <label class="field-label" for="input-allergies"><span id="allergies-field-label">Allergies</span><input id="input-allergies" maxlength="250" placeholder="e.g. Penicillin, or None known"></label>
+        <label class="field-label" for="input-abha"><span id="abha-field-label">Mock ABHA ID</span> <span class="optional" id="optional-label">optional</span><input id="input-abha" maxlength="30" placeholder="e.g. 12-3456-7890-1234"></label>
+        <div class="modal-actions"><button type="button" class="button button-secondary" id="cancel-profile">Cancel</button><button type="submit" class="button button-primary">Save profile</button></div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f8f4">
+    <meta name="description" content="Create a MY-SMR personal health copilot demo profile.">
+    <title>Create account — MY-SMR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js" defer></script>
+  </head>
+  <body class="auth-page" data-auth-page="register">
+    <main class="auth-layout">
+      <section class="auth-intro">
+        <a class="brand auth-brand" href="login.html" aria-label="MY-SMR sign in">
+          <span class="brand-mark" aria-hidden="true">+</span>
+          <span><strong>MY-SMR</strong><small>PERSONAL HEALTH COPILOT</small></span>
+        </a>
+        <div class="auth-promo">
+          <span class="auth-promo-icon" aria-hidden="true">✳</span>
+          <div class="eyebrow">A HEALTHIER WAY TO STAY ORGANIZED</div>
+          <h1>Your health story, organized around you.</h1>
+          <p>Create a demo profile to explore document review, plain-language summaries, and a unified health timeline.</p>
+          <div class="auth-points">
+            <span><i>✓</i> Add your personal profile details</span>
+            <span><i>✓</i> Keep records together in one view</span>
+            <span><i>✓</i> Export a FHIR-inspired JSON copy</span>
+          </div>
+        </div>
+        <span class="auth-footer-note">A personal health record organizer · Not for diagnosis</span>
+      </section>
+
+      <section class="auth-form-area">
+        <a class="auth-back-link" href="login.html">← Back to sign in</a>
+        <div class="auth-card">
+          <div class="eyebrow">GET STARTED</div>
+          <h2>Create your account</h2>
+          <p class="auth-subtitle">Set up a local demo profile in this browser.</p>
+
+          <div class="demo-notice" role="note">
+            <strong>Prototype demo registration</strong>
+            <span>This saves your demo name and email in this browser. Passwords are never stored. The separate local health-record database is not secured by this demo sign-in.</span>
+          </div>
+
+          <form id="register-form" novalidate>
+            <label class="field-label" for="register-name">Full name
+              <input id="register-name" name="name" type="text" autocomplete="name" required maxlength="100" placeholder="Your name">
+            </label>
+            <label class="field-label" for="register-email">Email address
+              <input id="register-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
+            </label>
+            <label class="field-label" for="register-password">Create password
+              <input id="register-password" name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128" placeholder="At least 8 characters">
+            </label>
+            <label class="field-label" for="register-confirm">Confirm password
+              <input id="register-confirm" name="confirmPassword" type="password" autocomplete="new-password" required minlength="8" maxlength="128" placeholder="Enter it again">
+            </label>
+            <label class="auth-consent"><input id="register-consent" type="checkbox" required> <span>I understand this is demo sign-in only, not secure authentication or secure storage for medical records.</span></label>
+            <p id="register-error" class="auth-error" role="alert" aria-live="polite"></p>
+            <button class="button button-primary auth-submit" type="submit">Create account <span>→</span></button>
+          </form>
+          <p class="auth-switch">Already registered on this device? <a href="login.html">Sign in</a></p>
+        </div>
+        <p class="auth-safe-note">Demo only · Do not enter a password you use elsewhere.</p>
+      </section>
+    </main>
+
+    <dialog id="auth-success" class="modal auth-success-dialog" aria-labelledby="success-title">
+      <div class="modal-card auth-success-card">
+        <span class="success-check" aria-hidden="true">✓</span>
+        <div class="eyebrow">MY-SMR DEMO</div>
+        <h2 id="success-title">Registration successful!</h2>
+        <p id="success-message" class="modal-description">Your demo profile has been created on this device. You can now sign in.</p>
+        <button id="success-continue" class="button button-primary auth-submit" type="button">Continue to sign in <span>→</span></button>
+      </div>
+    </dialog>
+  </body>
+</html>

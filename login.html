@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f8f4">
+    <meta name="description" content="Sign in to the MY-SMR personal health copilot demo.">
+    <title>Sign in — MY-SMR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js" defer></script>
+  </head>
+  <body class="auth-page" data-auth-page="login">
+    <main class="auth-layout">
+      <section class="auth-intro">
+        <a class="brand auth-brand" href="login.html" aria-label="MY-SMR sign in">
+          <span class="brand-mark" aria-hidden="true">+</span>
+          <span><strong>MY-SMR</strong><small>PERSONAL HEALTH COPILOT</small></span>
+        </a>
+        <div class="auth-promo">
+          <span class="auth-promo-icon" aria-hidden="true">✳</span>
+          <div class="eyebrow">YOUR HEALTH, IN ONE PLACE</div>
+          <h1>A clearer picture of your health starts here.</h1>
+          <p>Keep health records together, review a simple timeline, and take your information to your next appointment.</p>
+          <div class="auth-points">
+            <span><i>✓</i> Organize prescriptions and reports</span>
+            <span><i>✓</i> Review key details in simple language</span>
+            <span><i>✓</i> Records are stored locally on this computer</span>
+          </div>
+        </div>
+        <span class="auth-footer-note">A personal health record organizer · Not for diagnosis</span>
+      </section>
+
+      <section class="auth-form-area">
+        <a class="auth-back-link" href="login.html">← Sign in</a>
+        <div class="auth-card">
+          <div class="eyebrow">WELCOME BACK</div>
+          <h2>Sign in to MY-SMR</h2>
+          <p class="auth-subtitle">Use the email address you registered in this browser.</p>
+
+          <div class="demo-notice" role="note">
+            <strong>Prototype demo sign-in</strong>
+            <span>This demo sign-in does not authenticate with the server. Passwords are not checked; health records are stored in a local SQLite database without account protection.</span>
+          </div>
+
+          <form id="login-form" novalidate>
+            <label class="field-label" for="login-email">Email address
+              <input id="login-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
+            </label>
+            <label class="field-label" for="login-password">Password
+              <input id="login-password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
+            </label>
+            <p id="login-error" class="auth-error" role="alert" aria-live="polite"></p>
+            <button class="button button-primary auth-submit" type="submit">Sign in <span>→</span></button>
+          </form>
+          <p class="auth-switch">New to MY-SMR? <a href="register.html">Create an account</a></p>
+        </div>
+        <p class="auth-safe-note">Demo only · Do not enter a password you use elsewhere.</p>
+      </section>
+    </main>
+
+    <dialog id="auth-success" class="modal auth-success-dialog" aria-labelledby="success-title">
+      <div class="modal-card auth-success-card">
+        <span class="success-check" aria-hidden="true">✓</span>
+        <div class="eyebrow">MY-SMR DEMO</div>
+        <h2 id="success-title">Login successful!</h2>
+        <p id="success-message" class="modal-description">Welcome back. You can continue to your health dashboard.</p>
+        <button id="success-continue" class="button button-primary auth-submit" type="button">Continue to MY-SMR <span>→</span></button>
+      </div>
+    </dialog>
+  </body>
+</html>
